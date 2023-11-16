@@ -1,0 +1,53 @@
+
+.lady-profit-table {
+    margin: 20px 20px;
+    background-color: #ececf1;
+    border: 1px solid #282c34;
+    border-radius: 5px;
+    color: #282c34;
+    textAlign: right;
+}
+
+.td-profit {
+    border: 1px solid #282c34;
+    padding: 8px;
+    color: #282c34 !important;
+    text-align: right;
+}
+
+.select-profit {
+    margin: 20px 0 0 20px;
+    padding: 8px;
+    border: 1px solid #282c34;
+    border-radius: 5px;
+}
+
+
+.profit-button {
+    margin-left: 5px;
+    background-color: #444654;
+    color: #ececf1;
+    border: 1px solid #ececf1;
+    padding: 9px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.profit-button:hover {
+    background-color: #202123;
+}
+
+.loading-form {
+    padding: 10px;
+    background-color: #444654;
+}
+
+.li-profit {
+    font-size: 14px;
+    color: #ececf1;
+}
+
+.user-item-profit {
+    color: #EE9835 !important;
+    font-size: 14px !important;
+}

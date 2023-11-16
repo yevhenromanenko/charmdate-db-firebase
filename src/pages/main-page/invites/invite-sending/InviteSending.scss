@@ -1,0 +1,59 @@
+
+.invites-container {
+  margin: 0 auto;
+}
+
+.letter-form {
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #444654;
+}
+
+.error-message {
+  background-color: #f22c3d;
+  color: #ececf1;
+  padding: 10px;
+}
+
+.start-stop-button {
+  background-color: #444654;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.start-stop-button:hover {
+  background-color: #202123;
+}
+
+.online-users-info {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #ececf1;
+}
+
+.today-count-info {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #ececf1;
+}
+
+.check-camshare {
+  position: relative;
+  margin-left: 5px;
+  color: #ececf1;
+  display: inline;
+}
+
+.checkbox-camshare-invite {
+  background-color: #444654;
+  border: 1px solid #ececf1;
+  display: inline;
+  margin-left: 10px;
+}

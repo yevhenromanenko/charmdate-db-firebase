@@ -1,0 +1,97 @@
+
+.temp-answer-emf {
+  max-width: 100%;
+  height: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #444654;
+}
+
+.temp-answer-emf-letter {
+  max-width: 100%;
+  height: 620px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #444654;
+  overflow-y: auto;
+
+}
+
+
+.content-letter-use-answer-emf {
+  margin: 20px auto auto 20px;
+  color: #ececf1;
+  font-size: 14px;
+}
+
+.photo-answer-emf {
+  width: 300px;
+  height: 225px;
+}
+
+.left-part-letter {
+  width: 48%;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  max-height: 380px; /* Установите желаемую высоту для отображения прокрутки */
+  overflow-y: auto;
+}
+
+
+.right-part-letter {
+  width: 48%;
+  float: right;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  max-height: 380px; /* Установите желаемую высоту для отображения прокрутки */
+  overflow-y: auto;
+}
+
+.scrollable-letter {
+  max-height: 380px; /* Установите желаемую высоту для отображения прокрутки */
+  overflow-y: auto;
+}
+
+
+.show-hide-button-translate {
+  display: inline;
+  margin-left: 10px;
+  background-color: #444654;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.show-hide-button-translate:hover {
+  background-color: #202123;
+}
+
+.loading-form {
+  padding: 10px;
+  background-color: #444654;
+}
+
+.btn-answer-letter {
+  background-color: #444654;
+  margin-left: 26%;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-answer-letter:hover {
+  background-color: #202123;
+}

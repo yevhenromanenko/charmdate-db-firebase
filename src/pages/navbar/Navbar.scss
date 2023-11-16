@@ -1,0 +1,79 @@
+
+
+.navbar-charm {
+  background-color: #444654;
+  border: 1px solid #ddd;
+}
+
+.nav-list-navbar {
+  margin: 0 0 0 10px !important;
+  padding-left: 1px !important;
+  display: flex; /* Расположение элементов в строку */
+  align-items: center; /* Выравнивание элементов по вертикали по центру */
+  justify-content: flex-start; /* Выравнивание элементов по правому краю */
+  list-style: none; /* Убрать маркеры списка */
+}
+
+.photo-lady {
+  width: 20px; /* Ширина фото */
+  height: 30px; /* Высота фото */
+  margin-right: 5px; /* Отступ справа */
+}
+
+.id-lady {
+  border-right: 1px solid #ececf1;
+  color: #ececf1; /* Цвет текста ссылок */
+  padding: 10px 20px 10px 5px;
+  cursor: pointer;
+  text-decoration: none; /* Убрать подчеркивание ссылок */
+  transition: color 0.3s, transform 0.3s, filter 0.3s; /* Добавлены свойства transform и filter */
+}
+
+
+.id-lady:hover {
+  background-color: #202123;
+  color: #ececf1; /* Цвет текста при наведении */
+  transform: scale(1.1); /* Увеличиваем размер текста на 10% */
+  filter: brightness(1.2); /* Увеличиваем яркость текста на 20% */
+}
+
+
+.links_navbar {
+  border-right: 1px solid #ececf1;
+  padding: 10px 20px !important;
+  cursor: pointer;
+  color: #ececf1 !important; /* Цвет текста ссылок */
+  text-decoration: none !important; /* Убрать подчеркивание ссылок */
+  transition: color 0.3s, transform 0.3s, filter 0.3s; /* Добавлены свойства transform и filter */
+
+}
+
+.links_navbar:hover {
+  background-color: #202123;
+  color: #ececf1; /* Цвет текста при наведении */
+  transform: scale(1.1); /* Увеличиваем размер текста на 10% */
+  filter: brightness(1.2); /* Увеличиваем яркость текста на 20% */
+}
+
+.logout {
+  border-left: 1px solid #ececf1;
+  padding: 10px 20px !important;
+  cursor: pointer;
+  color: #ececf1 !important; /* Цвет текста ссылок */
+  text-decoration: none !important; /* Убрать подчеркивание ссылок */
+  transition: color 0.3s, transform 0.3s, filter 0.3s; /* Добавлены свойства transform и filter */
+
+}
+
+.logout:hover {
+  background-color: #202123;
+  color: #ececf1; /* Цвет текста при наведении */
+  transform: scale(1.1); /* Увеличиваем размер текста на 10% */
+  filter: brightness(1.2); /* Увеличиваем яркость текста на 20% */
+}
+
+
+//
+//.nav-list li {
+//  margin-right: 20px; /* Отступ между элементами списка */
+//}

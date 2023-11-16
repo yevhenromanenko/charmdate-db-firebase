@@ -1,0 +1,29 @@
+
+.mass-letter-finish-date {
+  margin: 0 auto;
+  border: 1px solid #444654;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #ddd;
+}
+
+.mass-letter-finish-date-text {
+  color: #444654;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.do-mass-button {
+  background-color: #ececf1;
+  color: #444654;
+  border: 1px solid #444654;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px
+}
+
+.do-mass-button:hover {
+  background-color: #444654;
+  border: 1px solid #ececf1;
+  color: #ececf1;
+}

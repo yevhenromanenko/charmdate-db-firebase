@@ -1,0 +1,105 @@
+
+.add-admire-container {
+  background-color: #444654;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.add-invites-title {
+  font-size: 20px;
+  margin: 5px auto auto 5px;
+  color: #ececf1;
+}
+
+.invite-list {
+  list-style: none;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 220px;
+}
+
+.invite-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ececf1;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  color: #ececf1;
+}
+
+.delete-button {
+  margin-left: 5px;
+  background-color: #444654;
+  color: #ececf1;
+  border: 1px solid #ececf1;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: inline;
+}
+
+.delete-button:hover {
+  background-color: #202123;
+}
+
+.scrollable {
+  max-height: 220px; /* Установите желаемую высоту для отображения прокрутки */
+  overflow-y: auto;
+}
+
+.show-hide-button {
+  background-color: #444654;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.show-hide-button:hover {
+  background-color: #202123;
+}
+
+.info-about {
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #ececf1;
+}
+
+.info-about-admire {
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #EE9835;
+}
+
+.letter-button-letter {
+  background-color: #444654;
+  margin-left: 5px;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.letter-button-letter:hover {
+  background-color: #202123;
+}
+
+
+.admire-form {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #444654;
+}

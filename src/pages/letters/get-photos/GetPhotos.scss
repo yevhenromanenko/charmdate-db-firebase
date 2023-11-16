@@ -1,0 +1,49 @@
+
+.img-in-letter {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  height: 50px;
+  width: 40px;
+  margin-left: 2px;
+  margin-top: 2px;
+}
+
+.selected img {
+  border-radius: 5px;
+  border: 3px solid red;
+}
+
+.scrollable-photos {
+  max-height: 110px; /* Установите желаемую высоту для отображения прокрутки */
+  overflow-y: auto;
+}
+
+.photos-in-letter {
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+.btn-add-video {
+  background-color: #444654;
+  margin-left: 8%;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+.btn-add-video:hover {
+  background-color: #202123;
+}
+
+.info-no-video {
+  font-size: 16px;
+  color: #ececf1;
+  padding: 5px 0;
+  margin: 0 10px;
+}

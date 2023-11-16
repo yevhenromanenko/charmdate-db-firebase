@@ -1,0 +1,103 @@
+
+.email-form {
+  padding: 10px;
+  background-color: #444654;
+}
+
+.tag-button-letter {
+  background-color: #444654;
+  margin-left: 5px;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 7px 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.tag-button-letter:hover {
+  background-color: #202123;
+}
+
+.content-letter {
+  height: 350px;
+  font-size: 14px;
+  padding: 10px;
+  width: 40%;
+  max-width: 100%;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-shadow: 1px 1px 1px #999;
+}
+
+
+.btn-save-letter {
+  background-color: #444654;
+  margin-left: 28%;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+.btn-save-letter:hover {
+  background-color: #202123;
+}
+
+.photo-selected {
+  display: inline;
+  margin: 5px 5px;
+}
+
+
+.btn-photo-mass-letter {
+  background-color: #444654;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-photo-mass-letter:hover {
+  background-color: #202123;
+}
+
+.info-email-form {
+  font-size: 14px;
+  border-top: 1px solid #ddd;
+  color: #e09f3e;
+  padding-top: 5px;
+  margin: 5px 10px;
+}
+
+.show-hide-button {
+  margin: 10px 0 5px 10px;
+  background-color: #444654;
+  color: white;
+  border: 1px solid #ececf1;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.show-hide-button:hover {
+  background-color: #202123;
+}
+
+
+.temp {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  max-width: 60%;
+
+}
+
+.content-letter-use {
+  color: #ececf1;
+  font-size: 14px;
+}

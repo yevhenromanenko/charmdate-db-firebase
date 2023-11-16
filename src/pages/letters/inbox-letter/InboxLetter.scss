@@ -1,0 +1,65 @@
+
+.inbox-container {
+  margin: 10px 10px 0 10px;
+}
+
+.info-about-inbox {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  font-size: 16px;
+  color: #ececf1;
+}
+
+.link-to-detail-sent {
+  margin: 0 5px;
+  font-size: 16px !important;
+  color: peru !important;
+}
+
+.link-to-detail-sent:hover {
+  color: #ececf1 !important;
+}
+
+
+.inbox-form {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #444654;
+}
+
+.inbox-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  color: #ececf1;
+}
+
+.link-to-detail {
+  font-size: 16px !important;
+  color: peru !important;
+}
+
+.link-to-detail:hover {
+  color: #ececf1 !important;
+}
+
+.answer-button {
+  margin-right: 60%;
+  background-color: #444654;
+  color: #ececf1;
+  border: 1px solid #ececf1;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: inline;
+}
+
+.answer-button:hover {
+  background-color: #202123;
+}
