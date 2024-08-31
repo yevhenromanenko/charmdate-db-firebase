@@ -10,7 +10,6 @@ const GetCurrentMonthStatistics = async (ladyId) => {
     const endDate = `${currentMonth}&date_e_d=${currentDate.getDate()}&date_e_y=${currentYear}`;
 
     const currentMonthProfit = await GetProfit(ladyId, startDate, endDate);
-    console.log(currentMonthProfit);
     return currentMonthProfit
 }
 

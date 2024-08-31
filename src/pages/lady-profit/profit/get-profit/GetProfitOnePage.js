@@ -5,9 +5,14 @@ async function GetProfitOnePage(url) {
     try {
         const response = await axios.get(url, {
             headers: {
-                "accept": "*/*",
-                "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
-                "x-requested-with": "XMLHttpRequest"
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'upgrade-insecure-requests': '1',
+                // "accept": "*/*",
+                // "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+                // "x-requested-with": "XMLHttpRequest"
             },
             referrerPolicy: 'strict-origin-when-cross-origin',
             method: 'GET',

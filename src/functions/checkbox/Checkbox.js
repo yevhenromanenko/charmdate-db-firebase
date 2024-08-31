@@ -1,7 +1,7 @@
 import React from "react";
-import {FaVideo} from "react-icons/fa";
+// import {FaVideo} from "react-icons/fa";
 
-const Checkbox = ({ checkCamshareInvite, onCamshareInviteChange }) => {
+const Checkbox = ({ checkCamshareInvite, onCamshareInviteChange, text }) => {
     return (
         <div style={{display: 'inline'}} className="checkbox-wrapper">
             <label>
@@ -13,7 +13,7 @@ const Checkbox = ({ checkCamshareInvite, onCamshareInviteChange }) => {
                     onChange={onCamshareInviteChange}
                 />
                 <span className={'check-camshare'}>
-                    Розсилати <FaVideo style={{color: '#ececf1' }} className="video-icon" /> Camshare інвайти
+                      {text}
                 </span>
             </label>
         </div>

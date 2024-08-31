@@ -6,6 +6,7 @@ async function SendLetterBP(letter, manId, ladyId, telNumber, mailPhoto, private
     const privateTwo = privatePhotoTwo ? `${privatePhotoTwo}|` : '';
     const privateThree = privatePhotoThree ? `${privatePhotoThree}|` : '';
     const privateVideo = video ? `${video}|` : '';
+    const referrerBP = `https://www.charmdate.com/clagt/mw_emf_agt.php?messageid=${replyId}&ids=${replyId}&manid=${manId}&act=reply-emf&template=1`;
 
     const url = 'https://www.charmdate.com/clagt/emf_sender5.php';
     const headers = {
@@ -26,7 +27,7 @@ async function SendLetterBP(letter, manId, ladyId, telNumber, mailPhoto, private
     formData.append("womanid", `${ladyId}`);
     formData.append("manid", `${manId}`);
     formData.append("reply_id", `${replyId}`);
-    formData.append("reply_id2", ``);
+    formData.append("reply_id2", `${replyId}`);
     formData.append("reply_flag", "yes");
     formData.append("lady_tel", `${telNumber}`);
     formData.append("checkcomment", "Y");
@@ -37,7 +38,7 @@ async function SendLetterBP(letter, manId, ladyId, telNumber, mailPhoto, private
     try {
         const response = await axios.post(url, formData.toString(), {
             headers: headers,
-            referrer: 'https://www.charmdate.com/clagt/emf_sender4.php',
+            referrer: referrerBP,
         });
 
         const res = response.data;

@@ -1,6 +1,6 @@
 import ConnectWebSocket from "../../connect-web-socket/ConnectWebSocket";
 
-const StartSendingInvites = async (whoViewProfile, whoGetAnswer, myListArray, isSending, socket, loginData, setErrorMessage, setIsConnectSocket, invites, setMyListArray, setIsSending, myListArrayRef, setMessageInterval, setCountInvite, setPersonalListArray, personalListArrayRef, setErr, isConnectSocket, setChat, setMessage, setLog, log, setStartChat, lastSavedDate, setLastSavedDate, invitesPersonal, invitesCamshare, checkCamshareInvite, startChat, banUsers, getAnswerFromMan, setGetAnswerFromMan, setReconnect, sendInviteRef, setSendInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref) => {
+const StartSendingInvites = async (whoViewProfile, whoGetAnswer, myListArray, isSending, socket, loginData, setErrorMessage, setIsConnectSocket, invites, setMyListArray, setIsSending, myListArrayRef, setMessageInterval, setCountInvite, setPersonalListArray, personalListArrayRef, setErr, isConnectSocket, setChat, setMessage, setLog, log, setStartChat, lastSavedDate, setLastSavedDate, invitesPersonal, invitesCamshare, checkCamshareInvite, startChat, banUsers, getAnswerFromMan, setGetAnswerFromMan, setReconnect, sendInviteRef, setSendInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref, markGetAnswer, whoGetSecondAnswer, spamUserIdsRef, telegramChatId, botToken) => {
 
     if (invites.length === 0) {
         alert("Додайте хоча б один інвайт для розсилки!");
@@ -26,7 +26,7 @@ const StartSendingInvites = async (whoViewProfile, whoGetAnswer, myListArray, is
     }
 
     setIsSending(true);
-    await ConnectWebSocket(socket, setIsConnectSocket, setErrorMessage, whoViewProfile, whoGetAnswer, loginData, setMyListArray, myListArrayRef, setErr, setPersonalListArray, personalListArrayRef, setChat, setMessage, setIsSending, setStartChat, setReconnect, setSendInvite, startChat, invitesPersonal, banUsers, checkCamshareInvite, invites, invitesCamshare, setLog, log, sendInviteRef, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref)
+    await ConnectWebSocket(socket, setIsConnectSocket, setErrorMessage, whoViewProfile, whoGetAnswer, loginData, setMyListArray, myListArrayRef, setErr, setPersonalListArray, personalListArrayRef, setChat, setMessage, setIsSending, setStartChat, setReconnect, setSendInvite, startChat, invitesPersonal, banUsers, checkCamshareInvite, invites, invitesCamshare, setLog, log, sendInviteRef, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref, markGetAnswer, whoGetSecondAnswer, spamUserIdsRef, telegramChatId, botToken)
 }
 
 export default StartSendingInvites;

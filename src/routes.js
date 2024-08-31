@@ -17,8 +17,19 @@ import GetBanUsers from "./pages/main-page/add-favorite/add-ban/GetBanUsers";
 import LadyProfit from "./pages/lady-profit/LadyProfit";
 import LocalStorageDataRenderer from "./functions/render-login-data-from-local-storage/RenderLoginDataFromLocalStorage";
 import WriteLetterToMan from "./functions/write-letter-to-man/WriteLetterToMan";
+import AdmireMailPage from "./pages/Admire-mail-page/AdmireMailPage";
+import AdminPage from "./pages/admin-page/AdminPage";
+import NavbarAdmin from "./pages/navbar-admin/NavbarAdmin";
+import CallsPage from "./pages/calls-page/CallsPage";
+import GetIP from "./functions/get-ip/GetIP";
 
 export const useRoutes = () => {
+
+    const [password, setPassword] = useState('');
+    const correctPassword = '1111';
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [lastLoginTime, setLastLoginTime] = useState(null);
+
     let adminId;
     let staffId;
     let pass;
@@ -26,6 +37,7 @@ export const useRoutes = () => {
     const sayHiLetter = 'sayHi-letter';
     const bpMail = 'bp-letter';
     const videoRequestLetter = 'videoRequest-letter';
+    const onlinePersonalLetter = 'onlinePersonal-letter'
     const [length, setLength] = useState('');
 
     // const [translator, setTranslator] = useState(null);
@@ -41,7 +53,24 @@ export const useRoutes = () => {
     const ladyIdsYevhen = ['C126657', 'C206042', 'C463543', 'C376351', 'C890734', 'C732259', 'C887670', 'C236953', 'C469616', 'C824939', 'C169721', 'C506027', 'C567282', 'C997135', 'C976365', 'C240448', 'C853966', 'C546584', 'C450615', 'C761532', 'C760077', 'C274363'];
     const ladyIdsViktor = ['C304010', 'C527776', 'C234727', 'C259212', 'C161627', 'C971993', 'C904001', 'C956425', 'C477914', 'C234038', 'C428797', 'C935273', 'C270581', 'C640007', 'C688060', 'C298661', 'C437447', 'C254911', 'C279619', 'C450928', 'C464307'];
     const ladyIdsViktorC2135 = ['C463111', 'C825824', 'C535511', 'C500607', 'C261256', 'C659624'];
-    const ladyIdsViktorC1337 = ['C252317', 'C535629', 'C647792', 'C348587', 'C674744', 'C152207', 'C428050', 'C508122', 'C532109', 'C758171', 'C249925', 'C743644', 'C337407', 'C591319', 'C225406', 'C372142', 'C535629', 'C156408']
+    const ladyIdsViktorC1337 = ['C252317', 'C535629', 'C647792', 'C348587', 'C674744', 'C152207', 'C428050', 'C508122', 'C758171', 'C249925', 'C743644', 'C337407', 'C591319', 'C225406', 'C372142', 'C535629', 'C156408', 'C532109']
+
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const handlePasswordSubmit = () => {
+        if (password === correctPassword) {
+            setIsAdmin(true);
+            setLastLoginTime(new Date().getTime());
+            // Save the admin state and login time to localStorage
+            localStorage.setItem('isAdmin', 'true');
+            localStorage.setItem('lastLoginTime', new Date().getTime());
+        } else {
+            alert('Неправильный пароль!');
+        }
+    };
 
     useEffect(() => {
         async function fetchDataAsync() {
@@ -63,10 +92,60 @@ export const useRoutes = () => {
         fetchDataAsync();
     }, []);
 
-    // useEffect(() => {
-    //     GetBanUsers(setBanUsers, ladyId)
-    //     GetFavorite(setAllUsers, ladyId, personalListArray);
-    // }, [ladyId, personalListArray]);
+    useEffect(() => {
+        // Check if admin state is stored in localStorage
+        const storedAdmin = localStorage.getItem('isAdmin');
+        const storedLastLoginTime = localStorage.getItem('lastLoginTime');
+
+        if (storedAdmin === 'true' && storedLastLoginTime) {
+            const currentTime = new Date().getTime();
+            const timeDifference = currentTime - parseInt(storedLastLoginTime);
+
+            // Check if it has been less than 24 hours since the last login
+            if (timeDifference < 24 * 60 * 60 * 1000) {
+                setIsAdmin(true);
+                setLastLoginTime(parseInt(storedLastLoginTime));
+            }
+        }
+    }, []);
+
+    if (window.location.href.includes('women_profiles_allow_edit')) {
+        if (!isAdmin) {
+            return (
+                <>
+                    <div style={{zIndex: '999'}} className={'inbox-container-routes'}>
+                        <div className={'login-admin'}>
+                            <span className={"admin-info-login"}>Введіть пароль, якщо ви адмін:</span>
+                            <br/>
+                            <div style={{marginTop: '5px'}}>
+                                <input className={'admin-input'}  type="password" value={password} onChange={handlePasswordChange} />
+                                <br/>
+                                <button className={'admin-btn'} onClick={handlePasswordSubmit}>Підтвердити</button>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        {document.title = `Admin`}
+                    </script>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <div style={{zIndex: '999'}} className={'inbox-container-routes'}>
+                        <NavbarAdmin
+                            setIsAdmin={setIsAdmin}
+                            setLastLoginTime={setLastLoginTime}
+                        />
+                        <AdminPage/>
+                    </div>
+                    <script>
+                        {document.title = `Admin`}
+                    </script>
+                </>
+            );
+        }
+    }
 
     if (!idLady && window.location.href.includes("lady/index.php")) {
         return (
@@ -76,10 +155,45 @@ export const useRoutes = () => {
         )
     }
 
-    if (idLady && idLady.length > 0) {
-        if (ladyIdsYevhen.includes(idLady) || ladyIdsViktor.includes(idLady)) {
+    if (!isAdmin && idLady && idLady.length > 0) {
+        if (ladyIdsYevhen.includes(idLady) || ladyIdsViktor.includes(idLady) || ladyIdsViktorC2135.includes(idLady) || ladyIdsViktorC1337.includes(idLady)) {
 
-            if (window.location.href.includes('online') && !window.location.href.includes('lady_online')) {
+            if (window.location.href.includes('notice_detail')) {
+                const fetch = async () => {
+                    if (idLady && idLady.length > 0) {
+                        if (ladyIdsYevhen.includes(idLady)) {
+                            adminId = 'C2436';
+                        } else if (ladyIdsViktor.includes(idLady)) {
+                            adminId = 'C1618';
+                        } else if (ladyIdsViktorC2135.includes(idLady)) {
+                            adminId = 'C2135';
+                        } else if (ladyIdsViktorC1337.includes(idLady)) {
+                            adminId = 'C1337';
+                        }
+
+                    }
+                    await GetIP(idLady, adminId);
+                }
+                fetch();
+
+                return (
+                    <>
+                        <Navbar
+                            photoLady={photoLady}
+                            idLady={idLady}
+                            setLogin={setLogin}
+                            login={login}
+                            adminId={adminId}
+                            ladyIdsYevhen={ladyIdsYevhen}
+                            ladyIdsViktor={ladyIdsViktor}
+                            ladyIdsViktorC2135={ladyIdsViktorC2135}
+                            ladyIdsViktorC1337={ladyIdsViktorC1337}
+                            length={length}
+                        />
+                    </>
+                )
+
+            } else if (window.location.href.includes('online') && !window.location.href.includes('lady_online')) {
                 return (
                     <>
                         <div className={'inbox-container-routes'}>
@@ -109,6 +223,7 @@ export const useRoutes = () => {
                                 ladyIdsViktorC1337={ladyIdsViktorC1337}
                                 setBanUsers={setBanUsers}
                                 banUsers={banUsers}
+                                idLady={idLady}
                             />
                         </div>
                         <script>
@@ -290,6 +405,7 @@ export const useRoutes = () => {
                                 firstLetter={firstLetter}
                                 sayHiLetter={sayHiLetter}
                                 videoRequestLetter={videoRequestLetter}
+                                onlinePersonalLetter={onlinePersonalLetter}
                                 bpMail={bpMail}
 
                             />
@@ -373,6 +489,58 @@ export const useRoutes = () => {
                         />
                     </>
                 )
+            } else if (window.location.href.includes("menu_type")) {
+                return (
+                    <>
+                        <div className={'inbox-container-routes'}>
+                            <Navbar
+                                photoLady={photoLady}
+                                idLady={idLady}
+                                setLogin={setLogin}
+                                login={login}
+                                adminId={adminId}
+                                ladyIdsYevhen={ladyIdsYevhen}
+                                ladyIdsViktor={ladyIdsViktor}
+                                ladyIdsViktorC2135={ladyIdsViktorC2135}
+                                ladyIdsViktorC1337={ladyIdsViktorC1337}
+                                length={length}
+                            />
+                            <AdmireMailPage
+                                ladyId={idLady}
+                            />
+                        </div>
+                        <script>
+                            {document.title = `Admire Mail`}
+                        </script>
+                    </>
+                )
+            } else if (window.location.href.includes("contact_us")) {
+                return (
+                    <>
+                        <div className={'inbox-container-routes'}>
+                            <Navbar
+                                photoLady={photoLady}
+                                idLady={idLady}
+                                setLogin={setLogin}
+                                login={login}
+                                adminId={adminId}
+                                ladyIdsYevhen={ladyIdsYevhen}
+                                ladyIdsViktor={ladyIdsViktor}
+                                ladyIdsViktorC2135={ladyIdsViktorC2135}
+                                ladyIdsViktorC1337={ladyIdsViktorC1337}
+                                length={length}
+                            />
+                            <CallsPage
+                                ladyId={idLady}
+                                banUsers={banUsers}
+                                setBanUsers={setBanUsers}
+                            />
+                        </div>
+                        <script>
+                            {document.title = `Calls`}
+                        </script>
+                    </>
+                )
             } else if (window.location.href.includes("reply2")) {
                 return (
                     <>
@@ -420,6 +588,17 @@ export const useRoutes = () => {
         } else {
             alert('Ви не маєте права користуватись додатком!')
         }
+    } else {
+        return (
+            <>
+                {isAdmin ?
+                    <NavbarAdmin
+                    setIsAdmin={setIsAdmin}
+                    setLastLoginTime={setLastLoginTime}
+                    />
+                    : ""}
+            </>
+        );
     }
 
 }

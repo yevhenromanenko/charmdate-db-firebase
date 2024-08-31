@@ -19,6 +19,8 @@ async function GetAdmireMail(url) {
         const $ = cheerio.load(response.data);
 
         const matches = [];
+        const uniqueAdmireIds = new Set();
+
 
         const anchors = $('td a').toArray();
 
@@ -32,16 +34,33 @@ async function GetAdmireMail(url) {
             if (match) {
                 const ladyId = match[1];
                 const admireId = match[2];
-                const url = `https://www.charmdate.com/clagt/admire/template/browse.php?womanid=${ladyId}&at_code=${admireId}&status=A`;
 
-                const { textMatches, imgUrls } = await GetAdmireInfo(url);
+                // Проверяем, был ли уже обработан такой admireId
+                if (!uniqueAdmireIds.has(admireId)) {
+                    uniqueAdmireIds.add(admireId);
 
-                const isDuplicate = matches.some(entry => entry.admireId === admireId);
+                    const url = `https://www.charmdate.com/clagt/admire/template/browse.php?womanid=${ladyId}&at_code=${admireId}&status=A`;
 
-                if (!isDuplicate) {
-                    matches.push({ladyId, admireId, textMatches, imgUrls, url});
+                    const { textMatches, imgUrls } = await GetAdmireInfo(url);
+
+                    matches.push({ ladyId, admireId, textMatches, imgUrls, url });
                 }
             }
+
+            // if (match) {
+            //     const ladyId = match[1];
+            //     const admireId = match[2];
+            //     const url = `https://www.charmdate.com/clagt/admire/template/browse.php?womanid=${ladyId}&at_code=${admireId}&status=A`;
+            //
+            //     const { textMatches, imgUrls } = await GetAdmireInfo(url);
+            //     console.log(textMatches, 'textMatches')
+            //
+            //     const isDuplicate = matches.some(entry => entry.admireId === admireId);
+            //
+            //     if (!isDuplicate) {
+            //         matches.push({ladyId, admireId, textMatches, imgUrls, url});
+            //     }
+            // }
         }
 
         const nextPage = [];

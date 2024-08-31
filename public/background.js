@@ -4,6 +4,34 @@ const state = {
     userId: null,
 };
 
+async function sendTelegramNotification(manId, womanName) {
+    let ladyName;
+    const telegramBotToken = '6719549462:AAF5UvUrVzUHuW-2jVJ4OI3jFg7-w4CD6YU';
+    const chatId = '418687047';
+    const telegramApiUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+
+    console.log(womanName, 'womanName')
+    if (womanName && womanName.length > 0) {
+        ladyName = womanName;
+    } else {
+        ladyName = state.userId
+    }
+
+    const message = `Чат: ${ladyName}-${state.userId} <-> ${manId}!`;
+
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: message }),
+    };
+
+    try {
+        await fetch(telegramApiUrl, options);
+    } catch (error) {
+        console.error('Error sending Telegram notification:', error);
+    }
+}
+
 async function fetchData(url, options) {
     try {
         const response = await fetch(url, options);
@@ -14,9 +42,8 @@ async function fetchData(url, options) {
 }
 
 async function playAudio() {
-    const audio = new Audio('https://soulmate-agency.com/findapp/sound/test');
+    const audio = new Audio('https://firebasestorage.googleapis.com/v0/b/charmdate-db.appspot.com/o/new_message_tone-1.mp3?alt=media&token=4b2eaec6-57c0-4ef2-ba96-a1d51b29fd5a');
 
-    console.log(state.userId, 'state.userId')
     if (!state.userId) {
         const infoUrl = "https://www.charmdate.com/lady/man/search_info.php";
         const options = {
@@ -37,9 +64,10 @@ async function playAudio() {
         const loginUserIdRegex = /var\s+loginUserId\s*=\s*"([^"]+)"/;
         const loginUserIdMatch = html.match(loginUserIdRegex);
 
+        console.log(loginUserIdMatch, 'loginUserIdMatch')
+
         state.userId = loginUserIdMatch && loginUserIdMatch.length > 1 ? loginUserIdMatch[1] : null;
     }
-    console.log(state.userId, 'state.userId2')
 
     const chatUrl = 'https://www.charmdate.com/clagt/livechat/index.php?action=live';
     const chatOptions = {
@@ -57,9 +85,11 @@ async function playAudio() {
     const chatPage = await fetchData(chatUrl, chatOptions);
     const trRegex = /<tr align="center" bgcolor="#FFFFFF">(.*?)<\/tr>/gs;
     let trMatch;
+    let ladyName;
 
     // Проверяем, есть ли совпадение 'C853966' на странице
     if (chatPage.includes(state.userId)) {
+        console.log(state.userId, 'state.userId')
         console.log(state.inviteIdArray, 'state.inviteIdArray')
 
         while ((trMatch = trRegex.exec(chatPage)) !== null) {
@@ -67,17 +97,36 @@ async function playAudio() {
             const manIdRegex = /men_profile\.php\?manid=([A-Z0-9\s]+)'/;
             const womanIdRegex = /women_preview_profile\.php\?womanid=([A-Z0-9\s]+)'/;
             const inviteIdRegex = /detail\.php\?inviteid=([A-Z0-9-]+)&/;
+            const womanNameRegex = /\(\s*([^)]+)\s*\)/;
+            const titleRegex = /title="([^"]+)"/;
 
             const manIdMatch = tdContent.match(manIdRegex);
             const womanIdMatch = tdContent.match(womanIdRegex);
             const inviteIdMatch = tdContent.match(inviteIdRegex);
+            const womanNameMatch = tdContent.match(womanNameRegex);
+            const titleMatch = tdContent.match(titleRegex);
+
 
             if (manIdMatch && womanIdMatch && inviteIdMatch && manIdMatch.length > 1 && womanIdMatch.length > 1 && inviteIdMatch.length > 1) {
+
                 const manId = manIdMatch[1].replace(/\s+/g, '');
                 const womanId = womanIdMatch[1].replace(/\s+/g, '');
                 const inviteId = inviteIdMatch[1].replace(/\s+/g, '');
+                const womanName = womanNameMatch[1];
+                const nameFromTitle = titleMatch[1];
+                console.log(womanName, 'womanName')
+                console.log(nameFromTitle, 'nameFromTitle')
+
+                if (nameFromTitle && nameFromTitle.length > 0) {
+                    ladyName = nameFromTitle
+                } else {
+                    ladyName = null;
+                }
 
                 console.log(state.manIdArray, 'state.manIdArray')
+                console.log(!state.manIdArray.includes(manId), '!state.manIdArray.includes(manId)')
+                console.log(!state.inviteIdArray.includes(inviteId), '!state.inviteIdArray.includes(inviteId)')
+                console.log(womanId === state.userId, 'womanId === state.userId');
 
 
                 if (!state.manIdArray.includes(manId) && !state.inviteIdArray.includes(inviteId) && womanId === state.userId) {
@@ -114,23 +163,9 @@ async function playAudio() {
                                 // Обработка закрытия уведомления пользователем
                             }
                         });
+                        sendTelegramNotification(manId, ladyName);
                     });
-
-                    // chrome.tabs.query({}, function(tabs) {
-                    //     // Находим вкладку по URL или другим критериям
-                    //     const tabToActivate = tabs.find(tab => tab.url === 'https://www.charmdate.com');
-                    //     console.log(tabToActivate, 'tabToActivate')
-                    //
-                    //     // Если нашлась вкладка
-                    //     if (tabToActivate) {
-                    //         console.log('сделали активной?')
-                    //         // Выбираем вкладку
-                    //         chrome.tabs.update(tabToActivate.id, { active: true });
-                    //     }
-                    // });
                 }
-
-                // Use manId, womanId, and inviteId as needed in your logic
             }
         }
 

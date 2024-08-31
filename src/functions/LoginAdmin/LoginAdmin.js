@@ -20,6 +20,7 @@ const LoginAdmin = async (login, setLogin, adminId, staffId, pass) => {
         if (loginResponse.status === 200) {
             console.log(`залогинились на ${adminId}`)
             setLogin(true);
+
         } else {
             console.error('Ошибка во время логина');
         }

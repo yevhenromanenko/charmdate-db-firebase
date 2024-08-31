@@ -1,0 +1,35 @@
+
+.personal-men {
+    margin: 0 auto;
+    border: 1px solid #ececf1;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #444654;
+}
+
+.personal-men-text {
+    color: #ececf1;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.do-send-chat {
+    margin-left: 1%;
+    background-color: #444654;
+    color: #ececf1;
+    border: 1px solid #ececf1;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px
+}
+
+.do-send-chat:hover {
+    background-color: #ececf1;
+    border: 1px solid #444654;
+    color: #444654;
+}
+
+.a-calls-personal {
+    color: #e09f3e !important;
+    font-size: 16px !important;
+}

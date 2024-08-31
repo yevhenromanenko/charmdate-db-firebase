@@ -4,10 +4,24 @@ import React, {useState} from "react";
 const AddFavoriteUserForm = ({setShowUserList, showUserList, allUsers, setAllUsers, ladyId}) => {
     const [inputValue, setInputValue] = useState('');
 
+    const isValidUserId = (userId) => {
+        // Используйте регулярное выражение для проверки формата
+        const regex = /^CM\d+$/;
+        return regex.test(userId);
+    };
+
     const handleAddUser = () => {
         if (inputValue !== '') {
+
+            const formattedId = inputValue.trim();
+
+            if (!isValidUserId(formattedId)) {
+                alert('ID користувача повинен починатися з CM і містити тільки цифри');
+                return null;
+            }
+
             const ids = {
-                id: inputValue
+                id: formattedId
             }
 
             const userExists = allUsers.some(user => user.id === ids.id);

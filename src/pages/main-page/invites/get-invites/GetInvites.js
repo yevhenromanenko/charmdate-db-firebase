@@ -7,7 +7,7 @@ const parseXML = (xml) => {
     return xmlDoc;
 };
 
-const GetInvites = async (loginData, setInvites, setInvitesCamshare) => {
+const GetInvites = async (loginData, setInvites, setInvitesCamshare, setCountInvitesOnConfirmation, setCountInvites, setInvitesOnConfirmation, setInvitesRejected, setCountRejected) => {
 
     const requestData = {
         curwomanid: `${loginData.loginUserId}`,
@@ -43,9 +43,16 @@ const GetInvites = async (loginData, setInvites, setInvitesCamshare) => {
             if (message.service_type === '1') {
                 // Если service_type равно 1, добавить в setInvitesCamshare
                 setInvitesCamshare((prevInvitesCamshare) => [...prevInvitesCamshare, message]);
-            } else if (message.service_type === '0') {
+            } else if (message.service_type === '0' && message.status === '0') {
+                setInvitesOnConfirmation((prevInvites) => [...prevInvites, message])
+                setCountInvitesOnConfirmation(count => count + 1);
+            } else if (message.service_type === '0' && message.status === '1') {
                 // Если service_type равно 0, добавить в setInvites
                 setInvites((prevInvites) => [...prevInvites, message]);
+                setCountInvites(count => count + 1)
+            } else if (message.service_type === '0' && message.status === '2') {
+                setInvitesRejected((prevInvites) => [...prevInvites, message]);
+                setCountRejected(count => count + 1)
             }
         });
         // return messages;

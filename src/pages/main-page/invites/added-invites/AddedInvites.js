@@ -9,7 +9,7 @@ import AddNewCamshareInvite from "../add-new-camshare-invite/AddNewCamshareInvit
 import HandleTagButtonClick from "../../../templates/handle-tag-button-click/HandleTagButtonClick";
 import CheckForForbiddenTags from "../../../../functions/check-for-forbidden-tags/CheckForForbiddenTags";
 
-const AddedInvites = ({invites, setInvites, loginData, invitesPersonal, setInvitesPersonal, invitesCamshare, setInvitesCamshare}) => {
+const AddedInvites = ({invites, invitesOnConfirmation, invitesRejected, setInvites, loginData, invitesPersonal, setInvitesPersonal, invitesCamshare, setInvitesCamshare, countInvites, countInvitesOnConfirmation, countRejected}) => {
 
     const [newInvite, setNewInvite] = useState('');
     const inputRef = useRef();
@@ -158,9 +158,20 @@ const AddedInvites = ({invites, setInvites, loginData, invitesPersonal, setInvit
 
                     <br/>
                     <div>
+                        <p style={{color: '#ececf1', fontSize: '16px', marginTop: '5px'}}>Підтверджені інвайти: <span style={{color: '#e09f3e', display: 'inline'}}>{countInvites}</span>! На підтвердженні: <span style={{color: '#e09f3e', display: 'inline'}}>{countInvitesOnConfirmation}</span>! Відхилені: <span style={{color: '#e09f3e', display: 'inline'}}>{countRejected}</span>!</p>
                         { invites.length > 0 &&
                         <div>
                             <ul className={`invite-list ${(invites.length + invitesCamshare.length + invitesPersonal.length) > 4 ? 'scrollable' : ''}`}>
+                                {invitesOnConfirmation.map((invite) => (
+                                    <li className="invite-item" key={invite.msgid}>
+                                        <span style={{maxWidth: '72%'}}>{invite.msg}</span>
+                                        <div>
+                                            <span style={{marginRight: '5px', display: 'inline'}}>{getServiceTypeText(invite.service_type)}</span>
+                                            <span style={{marginRight: '5px', display: 'inline'}}>{getStatusText(invite.status)}</span>
+                                            <button className="delete-button" onClick={() => deleteInvite(invite.msgid, loginData.loginUserId)}>Видалити</button>
+                                        </div>
+                                    </li>
+                                ))}
                                 {invites.map((invite) => (
                                     <li className="invite-item" key={invite.msgid}>
                                         <span style={{maxWidth: '72%'}}>{invite.msg}</span>
@@ -187,6 +198,16 @@ const AddedInvites = ({invites, setInvites, loginData, invitesPersonal, setInvit
                                         <div>
                                             <FaHeart style={{marginRight: '5px'}}/>
                                             <button className="delete-button" onClick={() => deleteInvitePersonal(invite.msgid)}>Видалити</button>
+                                        </div>
+                                    </li>
+                                ))}
+                                {invitesRejected.map((invite) => (
+                                    <li className="invite-item" key={invite.msgid}>
+                                        <span style={{maxWidth: '72%'}}>{invite.msg}</span>
+                                        <div>
+                                            <span style={{marginRight: '5px', display: 'inline'}}>{getServiceTypeText(invite.service_type)}</span>
+                                            <span style={{marginRight: '5px', display: 'inline'}}>{getStatusText(invite.status)}</span>
+                                            <button className="delete-button" onClick={() => deleteInvite(invite.msgid, loginData.loginUserId)}>Видалити</button>
                                         </div>
                                     </li>
                                 ))}

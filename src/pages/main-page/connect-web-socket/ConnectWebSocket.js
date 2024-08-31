@@ -1,102 +1,123 @@
 import SetOnline from "./SetOnline";
-import CreateWebSocket from "./CreateWebSocket";
+// import CreateWebSocket from "./CreateWebSocket";
 import AutoAnswer from "../invites/auto-answer/AutoAnswer";
 import SendingInvites from "../invites/sending-invites/SendingInvites";
 import Sending from "../invites/sending/Sending";
+import StopBot from "../../../functions/stop-bot/StopBot";
 
-const ConnectWebSocket = async (socket, setIsConnectSocket, setErrorMessage, whoViewProfile, whoGetAnswer, loginData, setMyListArray, myListArrayRef, setErr, setPersonalListArray, personalListArrayRef, setChat, setMessage, setIsSending, setStartChat, setReconnect, setSendInvite, startChat, invitesPersonal, banUsers, checkCamshareInvite, invites, invitesCamshare, setLog, log, sendInviteRef, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref) => {
+const ConnectWebSocket = async (socket, setIsConnectSocket, setErrorMessage, whoViewProfile, whoGetAnswer, loginData, setMyListArray, myListArrayRef, setErr, setPersonalListArray, personalListArrayRef, setChat, setMessage, setIsSending, setStartChat, setReconnect, setSendInvite, startChat, invitesPersonal, banUsers, checkCamshareInvite, invites, invitesCamshare, setLog, log, sendInviteRef, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref, markGetAnswer, whoGetSecondAnswer, spamUserIdsRef, telegramChatId, botToken) => {
 
-    socket.current = CreateWebSocket(loginData);
+    // socket.current = CreateWebSocket(loginData);
+    // socket.current = new WebSocket(`wss://chat.charmdate.com:5024/`);
+    const tryConnect = (url) => {
+        socket.current = new WebSocket(url);
 
-    socket.current.onopen = () => {
-        SetOnline(socket)
-        setErrorMessage(''); // Clear any previous error messages when the WebSocket is reconnected.
-        setIsConnectSocket(true);
-    };
+        socket.current.onopen = () => {
+            SetOnline(socket)
+            setErrorMessage(''); // Clear any previous error messages when the WebSocket is reconnected.
+            setIsConnectSocket(true);
+        };
 
-    socket.current.onerror = (err) => {
-        console.log('Socket onerror', err);
-        setErrorMessage('Ошибка, обновите программу!');
-        setIsConnectSocket(false);
-    };
+        socket.current.onerror = (err) => {
+            console.log('Socket onerror', err);
+            setErrorMessage('Помилка серверу charmdate, оновіть програму!');
+            setIsConnectSocket(false);
+        };
 
-    socket.current.onmessage = (event) => {
-        const eventData = event.data;
-        setErrorMessage('');
+        socket.current.onmessage = (event) => {
+            const eventData = event.data;
+            setErrorMessage('');
 
-        if(eventData.includes('"cmd":98')) {
+            if (eventData.includes('"cmd":98')) {
 
-            const users = ((eventData.split(`"data":"`) || [])[1] || '').split('",')[0];
-            const myListArray = users.split(',').map(item => `${item}`);
+                const users = ((eventData.split(`"data":"`) || [])[1] || '').split('",')[0];
+                const myListArray = users.split(',').map(item => `${item}`);
 
-            setMyListArray(myListArray);
-            myListArrayRef.current = myListArray;
+                setMyListArray(myListArray);
+                myListArrayRef.current = myListArray;
 
-            if (!hasSentCmd98Ref.current) {
-                let reqCounter = 6;
-                let reqTicket = 1;
-                Sending(socket, startChat, setIsSending, setIsConnectSocket, setErrorMessage, myListArrayRef, personalListArrayRef, invitesPersonal, banUsers, setErr, checkCamshareInvite, invites, invitesCamshare, reqTicket, reqCounter, setLog, whoViewProfile, whoGetAnswer, loginData, setMyListArray, setPersonalListArray, setChat, setMessage, setStartChat, log, setReconnect, sendInviteRef, setSendInvite, setCountInvite, hasSentCmd98, setHasSentCmd98);
-                setHasSentCmd98(true);
+                if (!hasSentCmd98Ref.current) {
+                    let reqCounter = 6;
+                    let reqTicket = 1;
+                    Sending(socket, startChat, setIsSending, setIsConnectSocket, setErrorMessage, myListArrayRef, personalListArrayRef, invitesPersonal, banUsers, setErr, checkCamshareInvite, invites, invitesCamshare, reqTicket, reqCounter, setLog, whoViewProfile, whoGetAnswer, loginData, setMyListArray, setPersonalListArray, setChat, setMessage, setStartChat, log, setReconnect, sendInviteRef, setSendInvite, setCountInvite, hasSentCmd98, setHasSentCmd98, markGetAnswer, spamUserIdsRef);
+                    setHasSentCmd98(true);
+                }
             }
-        }
 
 
-        if(eventData.includes('"cmd":162')) {
-            const usersData = ((eventData.split(`"data":[`) || [])[1] || '').split('],')[0];
-            const personalListArray = usersData.split(',').map(item => item.replace(/"/g, ''));
+            if (eventData.includes('"cmd":162')) {
+                const usersData = ((eventData.split(`"data":[`) || [])[1] || '').split('],')[0];
+                const personalListArray = usersData.split(',').map(item => item.replace(/"/g, ''));
 
-            setPersonalListArray(personalListArray);
-            personalListArrayRef.current = personalListArray;
-        }
+                setPersonalListArray(personalListArray);
+                personalListArrayRef.current = personalListArray;
+            }
 
-        if (eventData === '{"cmd":27,"data":4}') {
-            socket.current.close();
-            setSendInvite(false);
-            setReconnect(false);
-            setStartChat(true);
-            setIsSending(false);
-            setHasSentCmd98(false);
-            setMessage('');
-        }
+            if (eventData === '{"cmd":27,"data":4}') {
+                console.log('подключено к вебсокету на двух девайсах')
+                StopBot(socket, setSendInvite, setHasSentCmd98, setReconnect, setIsSending, setStartChat, setMessage);
+            }
 
 
-        if (eventData.includes('"cmd":24')) {
-            console.log(eventData, 'eventData 24')
-            AutoAnswer(eventData, whoGetAnswer, socket, setChat, setMessage, setIsSending, setStartChat, startChat, setSendInvite);
-        }
+            if (eventData.includes('"cmd":24')) {
+                console.log(eventData, 'eventData 24')
+                AutoAnswer(eventData, whoGetAnswer, socket, setChat, setMessage, setIsSending, setStartChat, startChat, setSendInvite, setHasSentCmd98, setReconnect, markGetAnswer, whoGetSecondAnswer, telegramChatId, botToken, loginData);
+            }
 
-        if(eventData === '{"data":true,"req":1,"cmd":-1}') {
-            socket.current?.send(`{"cmd":9,"req":2,"data":{"userId":"${loginData.loginUserId}","password":"${loginData.loginUserSwpid}","fromId":0,"sex":0,"type":0,"authType":0}}`);
-        }
+            if (eventData === '{"data":true,"req":1,"cmd":-1}') {
+                socket.current?.send(`{"cmd":9,"req":2,"data":{"userId":"${loginData.loginUserId}","password":"${loginData.loginUserSwpid}","fromId":3,"sex":0,"type":0,"authType":0}}`);
+            }
 
-        if(eventData === '{"data":true,"req":2,"cmd":9}') {
-            socket.current?.send('{"cmd":211,"req":3,"data":true}');
-        }
+            if (eventData === '{"data":{"_ok":-39,"_errorMsg":"CertificateException"},"req":2,"cmd":9}') {
+                alert('Вам потрібно пройти FaceId, зверніться до Вашого Адміністратора!')
+            }
 
-        if(eventData === '{"data":true,"req":3,"cmd":211}') {
-            socket.current?.send('{"cmd":98,"req":4,"data":{"endAge":99,"beginAge":18}}');
-            socket.current?.send('{"cmd":162,"req":5,"data":null}');
-        }
 
-        if (eventData.includes('"cmd":15')) {
-            const res = ((eventData.split(`"data":`) || [])[1] || '').split(',')[0];
+            if (eventData === '{"data":true,"req":2,"cmd":9}') {
+                socket.current?.send('{"cmd":211,"req":3,"data":true}');
+            }
 
-            if (res === 'false') {
-                setErr(err => err + 1);
+            // if(eventData.includes('"cmd":10')) {
+            //     socket.current?.send('{"cmd":211,"req":3,"data":true}');
+            //     socket.current?.send('{"cmd":98,"req":4,"data":{"endAge":99,"beginAge":18}}');
+            //     socket.current?.send('{"cmd":162,"req":5,"data":null}');
+            // }
 
-                setTimeout(() => {
-                    SendingInvites(socket, startChat, setIsSending, setIsConnectSocket, setErrorMessage, myListArrayRef, personalListArrayRef, invitesPersonal, banUsers, setErr, checkCamshareInvite, invites, invitesCamshare, setLog, whoViewProfile, whoGetAnswer, loginData, setMyListArray, setPersonalListArray, setChat, setMessage, setStartChat, log, setReconnect, sendInviteRef, setSendInvite, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref);
-                }, 15000);
+            if (eventData === '{"data":true,"req":3,"cmd":211}') {
+                socket.current?.send('{"cmd":98,"req":4,"data":{"endAge":99,"beginAge":18}}');
+                socket.current?.send('{"cmd":162,"req":5,"data":null}');
+            }
 
-            } else if (res === '{"_ok":-2') {
-                setErr(err => err + 1);
-                SendingInvites(socket, startChat, setIsSending, setIsConnectSocket, setErrorMessage, myListArrayRef, personalListArrayRef, invitesPersonal, banUsers, setErr, checkCamshareInvite, invites, invitesCamshare, setLog, whoViewProfile, whoGetAnswer, loginData, setMyListArray, setPersonalListArray, setChat, setMessage, setStartChat, log, setReconnect, sendInviteRef, setSendInvite, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref);
-            } else {
-                setCountInvite(count => count + 1);// выводим кол-во отправленных
-                SendingInvites(socket, startChat, setIsSending, setIsConnectSocket, setErrorMessage, myListArrayRef, personalListArrayRef, invitesPersonal, banUsers, setErr, checkCamshareInvite, invites, invitesCamshare, setLog, whoViewProfile, whoGetAnswer, loginData, setMyListArray, setPersonalListArray, setChat, setMessage, setStartChat, log, setReconnect, sendInviteRef, setSendInvite, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref);
+            if (eventData.includes('"cmd":15')) {
+                const res = ((eventData.split(`"data":`) || [])[1] || '').split(',')[0];
+
+                if (res === 'false') {
+                    setErr(err => err + 1);
+
+                    setTimeout(() => {
+                        SendingInvites(socket, startChat, setIsSending, setIsConnectSocket, setErrorMessage, myListArrayRef, personalListArrayRef, invitesPersonal, banUsers, setErr, checkCamshareInvite, invites, invitesCamshare, setLog, whoViewProfile, whoGetAnswer, loginData, setMyListArray, setPersonalListArray, setChat, setMessage, setStartChat, log, setReconnect, sendInviteRef, setSendInvite, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref, markGetAnswer, whoGetSecondAnswer, spamUserIdsRef);
+                    }, 15000);
+
+                } else if (res === '{"_ok":-2') {
+                    setErr(err => err + 1);
+                    SendingInvites(socket, startChat, setIsSending, setIsConnectSocket, setErrorMessage, myListArrayRef, personalListArrayRef, invitesPersonal, banUsers, setErr, checkCamshareInvite, invites, invitesCamshare, setLog, whoViewProfile, whoGetAnswer, loginData, setMyListArray, setPersonalListArray, setChat, setMessage, setStartChat, log, setReconnect, sendInviteRef, setSendInvite, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref, markGetAnswer, whoGetSecondAnswer, spamUserIdsRef);
+                } else if (res === '{"_ok":-21') {
+                    setErr(err => err + 1);
+                    alert('Нажаль розсилку заборонили на 24 години, спробуйте на наступний день знову. Час коли заборонили - був після останнього чату, можете переглянути це в чатах або звернутись до Адміністратора!')
+                } else {
+                    setCountInvite(count => count + 1);// выводим кол-во отправленных
+                    SendingInvites(socket, startChat, setIsSending, setIsConnectSocket, setErrorMessage, myListArrayRef, personalListArrayRef, invitesPersonal, banUsers, setErr, checkCamshareInvite, invites, invitesCamshare, setLog, whoViewProfile, whoGetAnswer, loginData, setMyListArray, setPersonalListArray, setChat, setMessage, setStartChat, log, setReconnect, sendInviteRef, setSendInvite, setCountInvite, hasSentCmd98, setHasSentCmd98, hasSentCmd98Ref, markGetAnswer, whoGetSecondAnswer, spamUserIdsRef);
+                }
             }
         }
     }
+
+    tryConnect('wss://chat.charmdate.com:5024/');
+
+    socket.current.onerror = (err) => {
+        console.log(`Primary server connection failed. Trying fallback server.`, err);
+        tryConnect('wss://chat2.charmdate.com:5024/');
+    };
 };
 
 

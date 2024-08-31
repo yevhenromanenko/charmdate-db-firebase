@@ -45,12 +45,13 @@ const StartSendMassLetter = (telNumber, ladyId, setCountMassLetter, massLetter, 
         const currentUser = menForMassLetter[processedUsersCount];
         processedUsersCount++;
 
-        // const userExists = banUsers.some((user) => user.id === currentUser.manId);
-        // if (userExists) {
-        //     setErrMassLetter(err => err + 1)
-        //     console.log('Спроба відправки користувачу, який у бан листі! Не відправлено!')
-        //     return null;
-        // }
+
+        const userExists = banUsers.some((user) => user.id === currentUser);
+        if (userExists) {
+            setErrMassLetter(err => err + 1)
+            console.log('Спроба відправки користувачу, який у бан листі! Не відправлено!')
+            return null;
+        }
 
         const randomUser = await GetUserInfo(currentUser)
 
@@ -81,7 +82,7 @@ const StartSendMassLetter = (telNumber, ladyId, setCountMassLetter, massLetter, 
 
         await SendMassLetter(replaceEmailContent, randomUser.id, ladyId, telNumber, mailPhoto, privatePhotoOne, privatePhotoTwo, privatePhotoThree, video, setErrMassLetter, gift, setCountMassLetter)
 
-    }, Math.floor(Math.random() * (40000 - 20000 + 1) + 20000));
+    }, Math.floor(Math.random() * (25000 - 15000 + 1) + 15000));
 
     setSendingIntervalMassLetter(intervalMassLetter);
 

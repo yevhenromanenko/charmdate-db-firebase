@@ -7,14 +7,27 @@ const AddBanUserForm = ({banUsers, setBanUsers, ladyId, showInputFirst}) => {
     const [banInputValue, setBanInputValue] = useState(''); // New state for ban input
     const [showUserBanList, setShowUserBanList] = useState(false); // State for showing ban list
 
-
     const handleBanInputChange = (event) => {
         setBanInputValue(event.target.value);
     };
+
+    const isValidUserId = (userId) => {
+        // Используйте регулярное выражение для проверки формата
+        const regex = /^CM\d+$/;
+        return regex.test(userId);
+    };
+
     const addBanUser = () => {
         if (banInputValue !== '') {
+            const formattedId = banInputValue.trim();
+
+            if (!isValidUserId(formattedId)) {
+                alert('ID користувача повинен починатися з CM і містити тільки цифри');
+                return null;
+            }
+
             const banIds = {
-                id: banInputValue,
+                id: formattedId,
             };
 
             const userExists = banUsers.some((user) => user.id === banIds.id);
@@ -27,7 +40,6 @@ const AddBanUserForm = ({banUsers, setBanUsers, ladyId, showInputFirst}) => {
             setBanUsers(updatedBanUsers);
             localStorage.setItem(`userBanIds-${ladyId}`, JSON.stringify(updatedBanUsers));
 
-            // Очищаем поле ввода
             setBanInputValue('');
         }
     };

@@ -32,8 +32,6 @@ async function SendLetter(letter, manId, ladyId, telNumber, mailPhoto, privatePh
             reply_flag = '';
         }
 
-
-
         const requestData = {
             body: `${letter}`,
             attachfilephoto: `${mailFoto}`,
@@ -54,7 +52,6 @@ async function SendLetter(letter, manId, ladyId, telNumber, mailPhoto, privatePh
             submit_emf_restrictions_action: ""
         };
 
-        console.log(referrer, 'referrer')
         const config = {
             headers: {
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -77,6 +74,9 @@ async function SendLetter(letter, manId, ladyId, telNumber, mailPhoto, privatePh
                 setErrMassLetter(err => err + 1)
             } else if (res.includes('short')) {
                 alert('Ви можете відправляти лист з проміжком 5 хвилин! На даний момент пройшло менше 5 хв, почекайте ще декілька хвилин та спробуйте знову!')
+                setErrMassLetter(err => err + 1)
+            } else if (res.includes('not replied')) {
+                alert('Чоловік не відповів на минулі листи, тому йому не можна написати листа, скажіть йому про це в чаті, щоб він написав вам хоч одного листа!')
                 setErrMassLetter(err => err + 1)
             } else {
                 setErrMassLetter(err => err + 1)

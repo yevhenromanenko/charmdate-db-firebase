@@ -16,6 +16,8 @@ const Navbar = ({photoLady, idLady, setLogin, login, adminId, ladyIdsYevhen, lad
     const chatLink = `https://www.charmdate.com/clagt/livechat/index.php?action=live`
     const inChat = 'https://www.charmdate.com/livechat/pad/chat-lady.php?manid=&inviteid='
     const instruction = 'https://docs.google.com/document/d/1m-nJNkbpojnCpwkNffJcWgmNJwTfrd0OxfgxtQmuMEQ/edit?usp=sharing'
+    const admireMailLink = 'https://www.charmdate.com/clagt/manager/helpsys.php?menu_type=8&t=2';
+    const callsLink = `https://www.charmdate.com/clagt/about/contact_us.php`;
 
     useEffect(() => {
         const fetch = async () => {
@@ -65,9 +67,11 @@ const Navbar = ({photoLady, idLady, setLogin, login, adminId, ladyIdsYevhen, lad
                     <li> <a className="links_navbar" href='https://www.charmdate.com/lady/online.php'>ЧАТ</a></li>
                     <li> <a style={{display: 'inline'}} className="links_navbar" href={linkToInboxLetter} target={'_blank'} rel="noopener noreferrer">ЛИСТИ {length ? <span style={{color: 'peru', display: 'inline'}}>({length})</span> : null}</a></li>
                     <li> <a className="links_navbar" href={templates} target={'_blank'} rel="noopener noreferrer">ШАБЛОНИ</a></li>
-                    <li> <a className="links_navbar" href={linkToMassLetter} target={'_blank'} rel="noopener noreferrer">МАСОВА РОЗСИЛКА</a></li>
+                    <li> <a className="links_navbar" href={linkToMassLetter} target={'_blank'} rel="noopener noreferrer">МАСОВА</a></li>
                     <li> <a className="links_navbar" href={sentLetterLink} target={'_blank'} rel="noopener noreferrer">НАДІСЛАНІ ЛИСТИ</a></li>
-                    <li> <a className="links_navbar" href={chatLink} target={'_blank'} rel="noopener noreferrer">ПЕРЕГЛЯНУТИ ЧАТИ</a></li>
+                    <li> <a className="links_navbar" href={chatLink} target={'_blank'} rel="noopener noreferrer">ЧАТИ</a></li>
+                    <li> <a className="links_navbar-admire" href={admireMailLink} target={'_blank'} rel="noopener noreferrer">ADMIRE</a></li>
+                    <li> <a className="links_navbar" href={callsLink} target={'_blank'} rel="noopener noreferrer">CALLS</a></li>
 
 
                     <li style={{ marginLeft: 'auto' }}> <a className="logout" href='https://www.charmdate.com/clagt/manager/approved_pc.php' target={'_blank'}>сьогодні ${sumCreditsToday}</a></li>

@@ -8,11 +8,16 @@ import InfoUserInLetter from "../../pages/letters/info-user-in-letter/InfoUserIn
 import AnswerForm from "../../pages/letters/Answer-Letters/answer-form/AnswerForm";
 import GetPhotos from "../../pages/letters/get-photos/GetPhotos";
 import GetTelNumber from "../get-tel-number/GetTelNumber";
+import GetContent from "../get-content/GetContent";
 
 const WriteLetterToMan = ({ladyId}) => {
 
     const placeholder = 'Напишіть чоловіку листа тут та відправте!'
     const answerFrom = 'mass-letter';
+    const firstLetter = 'onlinePersonal-letter';
+    const [noTemplateFound, setNoTemplateFound] = useState(false);
+    const [replyId, setReplyId] = useState(null);
+
 
     const [showUsers, setShowUsers] = useState(false); // State for showing ban list
     const [manId, setManId] = useState(null)
@@ -20,6 +25,8 @@ const WriteLetterToMan = ({ladyId}) => {
 
     const [err, setErr] = useState(0);
     const [count, setCount] = useState(0);
+
+    // const [letter, setLetter] = useState([]);
 
     const [user, setUser] = useState([]);
     const [content, setContent] = useState('');
@@ -61,10 +68,17 @@ const WriteLetterToMan = ({ladyId}) => {
         await SendLetter(content, manId, ladyId, telNumber, mailPhoto, privatePhotoOne, privatePhotoTwo, privatePhotoThree, video, setErr, gift, setCount, answerFrom, answerFrom)
     }
 
+    const useTemplate = async () => {
+        await GetContent(firstLetter, ladyId, setNoTemplateFound, setContent, setManId, setTelNumber, setReplyId, setSelectedMail, setSelectedGift, setSelectedPrivate, setSelectedVideo)
+    }
+
     return (
         <div style={{backgroundColor: '#444654'}}>
                 <button style={{margin: '10px'}} className={'show-button-mass'} onClick={toggle(setShowUsers, showUsers)}>
                     {showUsers ? 'Сховати ⬆' : `Написати листа ⬇`}
+                </button>
+                <button style={{margin: '10px'}} className={'show-button-mass'} onClick={useTemplate}>
+                    Шаблон для чоловіка онлайн
                 </button>
 
             {showUsers && (
@@ -75,9 +89,12 @@ const WriteLetterToMan = ({ladyId}) => {
                     </> :
                     <div className={'email-form'}>
                             <div className={'temp-answer-emf-letter'}>
+                                {noTemplateFound ?  <button style={{marginLeft: '0'}} className={'show-hide-button'} onClick={() => window.open("https://www.charmdate.com/clagt/woman/helpsys.php?help_type=3", '_blank')}>Додати шаблон</button> : null}
                                 {err > 0 ?  <p style={{display: 'inline', marginLeft: '10px', color: '#ececf1', fontSize: '16px'}}>Помилка відправки: {err}</p> : ''}
                                 <br/>
-                                <InfoUserInLetter user={user}/>
+                                <InfoUserInLetter
+                                    user={user}
+                                />
                                 <br/>
                                 <AnswerForm
                                     content={content}

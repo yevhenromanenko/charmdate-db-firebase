@@ -88,7 +88,7 @@ const GetPhotos = ({setSelectedMail, setSelectedPrivate, setSelectedVideo, setSe
                 {showMail ? `Безкоштовні ${selectedMail && selectedMail.length > 0 ? '1' : selectedMailCount} ⬆` : `Безкоштовні ${selectedMail && selectedMail.length > 0 ? '1' : selectedMailCount} ⬇`}
             </button>
 
-            {answerFrom === 'mass-letter' || answerFrom === 'bp-letter' || answerFrom === 'emf-letter' || answerFrom === 'first-letter' || firstLetter === 'first-letter' || firstLetter === 'bp-letter' ? (
+            {answerFrom === 'mass-letter' || answerFrom === 'bp-letter' || answerFrom === 'emf-letter' || answerFrom === 'first-letter' || firstLetter === 'first-letter' || firstLetter === 'bp-letter' || firstLetter === 'onlinePersonal-letter' ? (
                 <>
                     <button className={'show-hide-button-mass'} onClick={toggle(setShowPrivate, showPrivate)}>
                         {showPrivate ? `Приватні ${checkAllPrivatePhoto ? privatePhotos.length : selectedPrivate && selectedPrivate.length > 0 ? selectedPrivate.length : selectedPrivateCount} ⬆` : `Приватні ${checkAllPrivatePhoto ? privatePhotos.length : selectedPrivate && selectedPrivate.length > 0 ? selectedPrivate.length : selectedPrivateCount} ⬇`}

@@ -1,19 +1,9 @@
 import React from 'react';
+import GetAllDataFromLocalStorage from "../get-all-data-from-local-storage/GetAllDataFromLocalStorage";
 
 const LocalStorageDataRenderer = () => {
-    const getAllDataFromLocalStorage = () => {
-        const localStorageData = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key && key.includes('loginData-')) {
-                const data = JSON.parse(localStorage.getItem(key));
-                localStorageData.push(data);
-            }
-        }
-        return localStorageData;
-    };
 
-    const dataFromLocalStorage = getAllDataFromLocalStorage();
+    const dataFromLocalStorage = GetAllDataFromLocalStorage();
     const renderData = () => {
         return dataFromLocalStorage.map((data) => (
             <>
@@ -38,15 +28,29 @@ const LocalStorageDataRenderer = () => {
 
     return (
         dataFromLocalStorage.length > 0 ?
-            <div className={'login-data'}>
-                <h2 style={{color: '#ececf1', marginLeft: '10px', marginBottom: '5px'}}>Збережені профайли:</h2>
-                {renderData()}
-                <hr/>
-            </div>
+            <>
+                <div className={'login-data'}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        {/*<a style={{color: 'peru', fontSize: '14px'}} href={'https://www.charmdate.com/clagt/loginb.htm'} rel="noopener noreferrer">вхід адміна</a>*/}
+                        <button onClick={() => window.open('https://www.charmdate.com/clagt/loginb.htm')} style={{ cursor: 'pointer', background: 'none', border: 'none', color: '#ececf1', fontSize: '16px' }}>вхід адміна</button>
+                    </div>
+                    <h2 style={{color: '#ececf1', marginLeft: '10px', marginBottom: '5px'}}>Збережені профайли:</h2>
+                    {renderData()}
+                    <hr/>
+                </div>
+
+            </>
             :
-            <div className={'login-data'}>
-                <p  style={{color: '#ececf1', fontSize: '18px'}}>Нема збережених профайлів!</p>
-            </div>
+            <>
+                <div className={'login-data'}>
+                    <p  style={{color: '#ececf1', fontSize: '18px'}}>Нема збережених профайлів!</p>
+                    <hr/>
+                    <div>
+                        <a style={{color: 'peru', fontSize: '14px'}} href={'https://www.charmdate.com/clagt/loginb.htm'} rel="noopener noreferrer">вхід адміна</a>
+                    </div>
+                </div>
+            </>
+
     );
 };
 

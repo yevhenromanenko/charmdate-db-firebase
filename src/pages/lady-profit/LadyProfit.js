@@ -29,16 +29,22 @@ const LadyProfit = ({ ladyId }) => {
         }
 
         if (profitData) {
-            setData(profitData);
+            // setData([])
+            // setData(profitData);
+            setData((prevData) => [...profitData]);  // Используйте функцию обновления состояния
             const totalCredits = profitData.reduce((total, item) => total + parseFloat(item.credits), 0);
             setSumCredits(totalCredits.toFixed(2));
+            setDataNotFound(false);
         } else if (profitData === null){
-            setDataNotFound(true); // Если данные не найдены, устанавливаем состояние "данные не были найдены" в true
+            setDataNotFound(true);
         }
     };
 
     useEffect(() => {
-        fetchData();
+        const fetch = async () => {
+            await fetchData();
+        }
+        fetch();
     }, [selectedOption]);
 
     const getTypeDescription = (type) => {
@@ -64,9 +70,41 @@ const LadyProfit = ({ ladyId }) => {
         setSelectedOption(e.target.value);
     };
 
-    const renderTable = () => {
 
-        if (data.length > 0) {
+
+    const renderTable = () => {
+        if (dataNotFound) { // Если данные не были найдены, отображаем сообщение
+            return (
+                <div style={{marginLeft: '20px'}}>
+                    <p className={"info-about"}>Даних не знайдено! Вірогідно ви ще нічого не заробили!</p>
+                    <ul className={"info-about"}>Рекомендації щодо вашого профайлу:
+                        <li className={'li-profit'}>
+                            <a href={`https://www.charmdate.com/clagt/woman/submit_inquire_4.php?flag=2&womanid=${ladyId}`} target="_blank" className="user-item-profit">
+                                Оновіть
+                            </a>{' '}
+                            перше фото
+                        </li>
+                        <li className={'li-profit'}>
+                            Оновіть інвайти на головній сторінці
+                        </li>
+                        <li className={'li-profit'}>
+                            <a href={`https://www.charmdate.com/clagt/admire/template/add2.php?womanid=${ladyId}`} target="_blank" className="user-item-profit">
+                                Додайте
+                            </a>{' '}
+                            нові Admire Mail
+                        </li>
+                        <li className={'li-profit'}>
+                            <a href={`https://www.charmdate.com/clagt/about/terms_update.php`} target="_blank" className="user-item-profit">
+                                Перегляньте
+                            </a>{' '}
+                            всі листи, чи немає у вас нових?
+                        </li>
+                    </ul>
+                </div>
+            );
+        }
+
+        if (data.length > 0 && !dataNotFound) {
             return (
                 <table className={'lady-profit-table'}>
                     <thead>
@@ -108,35 +146,6 @@ const LadyProfit = ({ ladyId }) => {
                     </tr>
                     </tbody>
                 </table>
-            );
-        } else if (dataNotFound) { // Если данные не были найдены, отображаем сообщение
-            return (
-                <div style={{marginLeft: '20px'}}>
-                    <p className={"info-about"}>Даних не знайдено! Вірогідно ви ще нічого не заробили!</p>
-                    <ul className={"info-about"}>Рекомендації щодо вашого профайлу:
-                        <li className={'li-profit'}>
-                            <a href={`https://www.charmdate.com/clagt/woman/submit_inquire_4.php?flag=2&womanid=${ladyId}`} target="_blank" className="user-item-profit">
-                                Оновіть
-                            </a>{' '}
-                            перше фото
-                        </li>
-                        <li className={'li-profit'}>
-                            Оновіть інвайти на головній сторінці
-                        </li>
-                        <li className={'li-profit'}>
-                            <a href={`https://www.charmdate.com/clagt/admire/template/add2.php?womanid=${ladyId}`} target="_blank" className="user-item-profit">
-                                Додайте
-                            </a>{' '}
-                            нові Admire Mail
-                        </li>
-                        <li className={'li-profit'}>
-                            <a href={`https://www.charmdate.com/clagt/about/terms_update.php`} target="_blank" className="user-item-profit">
-                                Перегляньте
-                            </a>{' '}
-                            всі листи, чи немає у вас нових?
-                        </li>
-                    </ul>
-                </div>
             );
         } else {
             return (

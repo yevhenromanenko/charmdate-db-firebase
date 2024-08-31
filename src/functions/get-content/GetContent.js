@@ -3,6 +3,7 @@ import GetUserInfo from "../get-user-info/GetUserInfo";
 import ReplaceTagsTemplates from "../replace-tags-templates/ReplaceTagsTemplates";
 import GetTelNumber from "../get-tel-number/GetTelNumber";
 import {use} from "bcrypt/promises";
+import getLetterFromServer from "../../pages/letters/letter-on-server/getLetterFromServer";
 const GetContent = async (firstLetter, ladyId, setNoTemplateFound, setContent, setManId, setTelNumber, setReplyId, setSelectedMail, setSelectedGift, setSelectedPrivate, setSelectedVideo, manId) => {
 
     let userId;
@@ -15,7 +16,12 @@ const GetContent = async (firstLetter, ladyId, setNoTemplateFound, setContent, s
 
     const user = await GetUserInfo(userId);
     userArray.push(user)
-    const content = JSON.parse(localStorage.getItem(`${firstLetter}-${ladyId}`)) || [];
+
+
+    // const content = JSON.parse(localStorage.getItem(`${firstLetter}-${ladyId}`)) || [];
+    const content = await getLetterFromServer(firstLetter, ladyId) || [];
+    console.log(content, 'content')
+
 
     if (content.length === 0) {
         setNoTemplateFound(true); // Устанавливаем флаг, если шаблон не найден
@@ -33,7 +39,7 @@ const GetContent = async (firstLetter, ladyId, setNoTemplateFound, setContent, s
             setContent(replaceContent);
             setSelectedMail(content ? content[0].mailPhoto : '');
 
-        } else if (firstLetter === 'first-letter' || firstLetter === 'bp-letter') {
+        } else if (firstLetter === 'first-letter' || firstLetter === 'bp-letter' || firstLetter === 'onlinePersonal-letter') {
             const replaceContent = await ReplaceTagsTemplates(content[0].letter, user)
 
             setContent(replaceContent);

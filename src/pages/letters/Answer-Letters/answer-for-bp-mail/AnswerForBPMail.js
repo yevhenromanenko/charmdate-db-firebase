@@ -55,11 +55,11 @@ const AnswerForBPMail = ({ladyId, firstLetter}) => {
                 const text = letter[0].textLetter;
                 setLetterFromMan(letter);
 
-                const translateText = await TranslateText(text, languageRu);
-                const translateTextUa = await TranslateText(text, languageUa);
-
                 const user = await GetContent(firstLetter, ladyId, setNoTemplateFound, setLetter, setManId, setTelNumber, setReplyId, setSelectedMail, setSelectedGift, setSelectedPrivate, setSelectedVideo, manId)
                 setUser(prev => [...prev, ...user])
+
+                const translateText = await TranslateText(text, languageRu);
+                const translateTextUa = await TranslateText(text, languageUa);
 
                 setTrLetter(translateText)
                 setTrLetterUa(translateTextUa)
@@ -75,7 +75,8 @@ const AnswerForBPMail = ({ladyId, firstLetter}) => {
 
     const SendingLetter = async () => {
 
-        const {mailPhoto, privatePhotoOne, privatePhotoTwo, privatePhotoThree, video, gift} = PhotoVideoGift(selectedMail, selectedPrivate, selectedVideo, selectedGift, ladyId, manId)
+        const {mailPhoto, privatePhotoOne, privatePhotoTwo, privatePhotoThree, video, gift} = await PhotoVideoGift(selectedMail, selectedPrivate, selectedVideo, selectedGift, ladyId, manId)
+
         await SendLetterBP(letter, manId, ladyId, telNumber, mailPhoto, privatePhotoOne, privatePhotoTwo, privatePhotoThree, video, setErr, gift, setCount, replyId, answerFrom)
     }
 
@@ -129,76 +130,6 @@ const AnswerForBPMail = ({ladyId, firstLetter}) => {
                                                     setShowTranslateUa={setShowTranslateUa}
                                                 />
                                             </>
-                                            // <>
-                                            //     <div className={`left-part-letter ${mail.textLetter.length > 1200 ? 'scrollable-letter' : ''}`}>
-                                            //         <p style={{color: '#e09f3e', fontSize: '16px'}}>
-                                            //             Текст листа від{" "}
-                                            //             <a
-                                            //                 className={'link-to-detail'}
-                                            //                 href={`https://www.charmdate.com/clagt/admire/men_profile.php?manid=${mail.manId}`}
-                                            //                 target="_blank"
-                                            //                 rel="noopener noreferrer"
-                                            //             >
-                                            //                 {mail.manId}:
-                                            //             </a>
-                                            //         </p>
-                                            //         <p style={{marginLeft: '0', marginTop: '0'}} className={'content-letter-use-answer-emf'}>{mail.textLetter}</p>
-                                            //
-                                            //         {mail.photoLetter.length > 0 && (
-                                            //             <>
-                                            //                 <button className={'show-hide-button-mass'} onClick={toggle(setShowMail, showMail)}>
-                                            //                     {showMail ? `Фото чоловіка ⬆` : `Фото чоловіка ⬇`}
-                                            //                 </button>
-                                            //
-                                            //                 {showMail && (
-                                            //                     <>
-                                            //                         {/*тут перебрать фото*/}
-                                            //                         <p><img className={'photo-answer-emf'} src={`https://www.charmdate.com${mail.photoLetter}`}/></p>
-                                            //                         <p className={'type-answer-emf'}>{mail.typePhoto}</p>
-                                            //                     </>
-                                            //                 )}
-                                            //             </>
-                                            //         )}
-                                            //     </div>
-                                            //
-                                            //     <div className={`right-part-letter ${trLetter.length > 1200 ? 'scrollable-letter' : ''}`}>
-                                            //         <p style={{color: '#e09f3e', fontSize: '16px', display: 'inline'}}>Переклад листа:</p>
-                                            //         <button className={'show-hide-button-translate'} onClick={() => toggleLanguage('ru')}>
-                                            //             {showTranslateRu ? `російською ⬆` : `російською ⬇`}
-                                            //         </button>
-                                            //         <button className={'show-hide-button-translate'} onClick={() => toggleLanguage('ua')}>
-                                            //             {showTranslateUa ? `Українською ⬆` : `Українською ⬇`}
-                                            //         </button>
-                                            //
-                                            //
-                                            //         {showTranslateRu && (
-                                            //             trLetter.length > 0 ?
-                                            //                 <>
-                                            //                     <p className={'content-letter-use-answer-emf'}>{trLetter}</p>
-                                            //                 </> :
-                                            //                 <>
-                                            //                     <div className={'loading-form'}>
-                                            //                         <p className={"info-about"}>Завантаження перекладу...</p>
-                                            //                         <BeatLoader css={override} size={15} color={"#ececf1"} />
-                                            //                     </div>
-                                            //                 </>
-                                            //         )}
-                                            //
-                                            //         {showTranslateUa && (
-                                            //             trLetterUa.length > 0 ?
-                                            //                 <>
-                                            //                     <p className={'content-letter-use-answer-emf'}>{trLetterUa}</p>
-                                            //                 </> :
-                                            //                 <>
-                                            //                     <div className={'loading-form'}>
-                                            //                         <p className={"info-about"}>Завантаження перекладу...</p>
-                                            //                         <BeatLoader css={override} size={15} color={"#ececf1"} />
-                                            //                     </div>
-                                            //                 </>
-                                            //         )}
-                                            //     </div>
-                                            //
-                                            // </>
                                         ))}
                                     </>
                                 )}
@@ -227,22 +158,6 @@ const AnswerForBPMail = ({ladyId, firstLetter}) => {
                                 showPhoto={showPhoto}
                                 placeholder={placeholder}
                             />
-                            {/*<textarea*/}
-                            {/*    id="content"*/}
-                            {/*    className={'content-letter'}*/}
-                            {/*    placeholder={'Напишіть відповідь на лист тут, ви можете написати на будь-якій мові і натиснути кнопку вище "Переклад"'}*/}
-                            {/*    name="content"*/}
-                            {/*    value={letter}*/}
-                            {/*    onChange={(e) => setLetter(e.target.value)}*/}
-                            {/*/>*/}
-                            {/*<br/>*/}
-                            {/*<button className={'btn-photo-mass-letter'} onClick={handlePhotoClick}>*/}
-                            {/*    {showPhoto ? 'Фото ⬆' : 'Фото ⬇'}*/}
-                            {/*</button>*/}
-
-                            {/*<button className={'btn-answer-letter'} onClick={SendingLetter}>Надіслати</button>*/}
-
-
                             <br/>
                             {showPhoto && (
                                 <GetPhotos

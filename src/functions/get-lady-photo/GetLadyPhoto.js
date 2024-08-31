@@ -42,6 +42,7 @@ async function getLadyPhotoLink(ladyIdsYevhen, ladyIdsViktor, ladyIdsViktorC2135
             } else if (ladyIdsViktorC1337.includes(userId)) {
                 adminId = 'C1337';
             }
+
         }
 
         const regex = new RegExp(`https://www\\.charmdate\\.com/woman_photo/${adminId}/[^"]+`, 'g');

@@ -95,7 +95,6 @@ const AnswerForEmfLetter = ({ladyId}) => {
     const SendingLetter = async () => {
 
         const {mailPhoto, privatePhotoOne, privatePhotoTwo, privatePhotoThree, video, gift} = await PhotoVideoGift(selectedMail, selectedPrivate, selectedVideo, selectedGift, ladyId, manId)
-        console.log(mailPhoto, privatePhotoOne, privatePhotoTwo, privatePhotoThree, video, gift, 'emf')
         await SendLetter(letter, manId, ladyId, telNumber, mailPhoto, privatePhotoOne, privatePhotoTwo, privatePhotoThree, video, setErr, gift, setCount, replyId, answerFrom)
     }
 

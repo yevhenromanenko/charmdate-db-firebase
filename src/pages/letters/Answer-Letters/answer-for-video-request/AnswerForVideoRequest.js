@@ -65,7 +65,10 @@ const AnswerForVideoRequest = ({ladyId, firstLetter}) => {
                             {noTemplateFound ?  <button style={{marginLeft: '0'}} className={'show-hide-button'} onClick={() => window.open("https://www.charmdate.com/clagt/woman/helpsys.php?help_type=3", '_blank')}>Додати шаблон</button> : null}
                             {err > 0 ?  <p style={{display: 'inline', marginLeft: '10px', color: '#ececf1', fontSize: '16px'}}>Помилка відправки: {err}</p> : ''}
                             <br/>
-                            <InfoUserInLetter user={user}/>
+                            <InfoUserInLetter
+                                user={user}
+                                replyId={replyId}
+                            />
                             <br/>
                             <AnswerForm
                                 content={content}

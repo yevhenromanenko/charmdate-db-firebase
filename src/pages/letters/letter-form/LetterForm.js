@@ -8,7 +8,10 @@ const LetterForm = ({user, mail, setShowMail, showMail}) => {
             <div className={`left-part-letter ${mail.textLetter.length > 1200 ? 'scrollable-letter' : ''}`}>
 
                 <div style={{borderBottom: '1px solid #ddd', padding: '5px'}}>
-                    <InfoUserInLetter user={user}/>
+                    <InfoUserInLetter
+                        user={user}
+                        replyId={mail.replyId}
+                    />
                 </div>
 
                 <p style={{marginLeft: '10px', marginTop: '5px'}} className={'content-letter-use-answer-emf'}>

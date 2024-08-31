@@ -2,6 +2,11 @@ import axios from "axios";
 const cheerio = require('cheerio');
 
 const GetInfoBonusPoint = async () => {
+    //
+    // let womanid;
+    // let manid;
+    // let sign;
+    //
     const currentUrl = window.location.href;
     const messageId = currentUrl.split('messageid=')[1];
     const message = messageId.split('&')[0];
@@ -50,6 +55,22 @@ const GetInfoBonusPoint = async () => {
 
             const typePhotoElement = $('div[align="center"] > strong');
             const typePhoto = typePhotoElement.text().trim() || '';
+
+            // const tdText = document.querySelector('td[align="right"]').textContent;
+            // if (tdText) {
+            //     const womanidMatch = tdText.match(/womanid=([^&]+)/);
+            //     const manidMatch = tdText.match(/manid=([^&]+)/);
+            //     const signMatch = tdText.match(/sign=([^'"]+)/);
+            //
+            //     womanid = womanidMatch ? womanidMatch[1] : null;
+            //     manid = manidMatch ? manidMatch[1] : null;
+            //     sign = signMatch ? signMatch[1] : null;
+            // }
+            //
+            // console.log("womanid:", womanid);
+            // console.log("manid:", manid);
+            // console.log("sign:", sign);
+
 
             objEmf.push({
                 manId,
